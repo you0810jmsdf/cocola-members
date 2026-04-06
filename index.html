@@ -41,7 +41,7 @@ body{font-family:var(--font);background:var(--gray);color:var(--text);min-height
 .card-sub{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
 .tags{display:flex;flex-wrap:wrap;gap:4px}
 .tag{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
-.card-bio{font-size:13px;color:#555;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-bio{font-size:13px;color:#555;line-height:1.65}
 .card-links{display:flex;gap:5px;flex-wrap:wrap}
 .lbtn{font-size:11px;padding:3px 9px;border-radius:8px;border:1px solid var(--border);color:var(--muted);text-decoration:none;background:var(--gray);transition:all .12s}
 .lbtn:hover{border-color:var(--green);color:var(--green-dk)}
@@ -190,7 +190,7 @@ function buildMembers(rows){
     [m._s1,m._s2,m._u1,m._u2].forEach(u=>{
       u=cleanUrl(u);if(!u)return;
       let label='Web';
-      if(u.includes('threads.net'))label='Threads';
+      if(u.includes('threads.net')||u.includes('threads.com'))label='Threads';
       else if(u.includes('instagram'))label='Instagram';
       else if(u.includes('facebook'))label='Facebook';
       else if(u.includes('twitter')||u.includes('x.com'))label='X';
@@ -213,7 +213,7 @@ function cleanUrl(u){
 
 function cardHTML(m){
   const tags=m.cats.slice(0,2).map(t=>`<span class="tag ${TAG_CLASS[t]||''}">${t}</span>`).join('');
-  const lnks=m.links.slice(0,3).map(l=>`<a class="lbtn" href="${esc(l.url)}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  const lnks=m.links.map(l=>`<a class="lbtn" href="${esc(l.url)}" target="_blank" rel="noopener">${l.label}</a>`).join('');
   const bio=m.comment||m.skills||'';
   return `<div class="card" data-idx="${m.idx}" role="button" tabindex="0">
     <div class="card-top">${avatarHTML(m.photo,false)}<div>
