@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COCoLa メンバー紹介</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--green-dk:#0F6E56;
+  --gray:#f5f5f3;--border:#e4e4e0;--text:#1a1a18;--muted:#7a7a76;--white:#ffffff;
+  --r-card:14px;--r-pill:20px;
+  --font:'Hiragino Sans','Hiragino Kaku Gothic ProN',Meiryo,'Yu Gothic',sans-serif;
+}
+body{font-family:var(--font);background:var(--gray);color:var(--text);min-height:100vh}
+.site-header{background:var(--white);border-bottom:1px solid var(--border);padding:.9rem 1.2rem;display:flex;align-items:center;gap:10px}
+.logo{width:36px;height:36px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0}
+.site-header h1{font-size:16px;font-weight:600}
+.site-header p{font-size:12px;color:var(--muted);margin-top:1px}
+.toolbar{background:var(--white);border-bottom:1px solid var(--border);padding:.75rem 1.2rem;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.chips{display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:0}
+.chip{font-size:12px;padding:4px 11px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--white);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;user-select:none}
+.chip:hover{border-color:var(--green);color:var(--green)}
+.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+.search-box{display:flex;align-items:center;gap:6px;background:var(--gray);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;flex-shrink:0}
+.search-box svg{width:14px;height:14px;stroke:var(--muted);fill:none;flex-shrink:0}
+.search-box input{border:none;background:transparent;font-size:13px;font-family:var(--font);color:var(--text);outline:none;width:150px}
+.search-box input::placeholder{color:var(--muted)}
+.main{padding:1rem 1rem 3rem}
+.meta{font-size:12px;color:var(--muted);margin-bottom:.75rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.search-box input{width:100px}}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-card);padding:1.1rem;display:flex;flex-direction:column;gap:9px;cursor:pointer;transition:box-shadow .18s,border-color .18s,transform .18s}
+.card:hover{border-color:var(--green);box-shadow:0 4px 18px rgba(29,158,117,.10);transform:translateY(-1px)}
+.card-top{display:flex;align-items:center;gap:11px}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:#f0f0ec;border:1px solid #e0e0db}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.modal-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:#f0f0ec;border:1px solid #e0e0db}
+.modal-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.card-name{font-size:15px;font-weight:600;color:var(--text);line-height:1.3}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
+.card-bio{font-size:13px;color:#555;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-links{display:flex;gap:5px;flex-wrap:wrap}
+.lbtn{font-size:11px;padding:3px 9px;border-radius:8px;border:1px solid var(--border);color:var(--muted);text-decoration:none;background:var(--gray);transition:all .12s}
+.lbtn:hover{border-color:var(--green);color:var(--green-dk)}
+.tc-mono{background:#E1F5EE;color:#0F6E56}.tc-machi{background:#E6F1FB;color:#185FA5}
+.tc-tsuna{background:#EEEDFE;color:#534AB7}.tc-shoku{background:#FAEEDA;color:#854F0B}
+.tc-jibun{background:#FAECE7;color:#993C1D}.tc-tomo{background:#FBEAF0;color:#993556}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;padding:16px;overflow-y:auto}
+.modal-bg.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--white);border-radius:var(--r-card);padding:1.5rem;max-width:540px;width:100%;margin:auto;position:relative}
+.modal-close{position:absolute;top:12px;right:14px;background:var(--gray);border:none;cursor:pointer;width:28px;height:28px;border-radius:50%;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--border)}
+.modal-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.modal-name{font-size:20px;font-weight:600}
+.modal-sub{font-size:13px;color:var(--muted);margin-top:3px}
+.modal-tags{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0}
+.modal-section{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:14px 0 5px}
+.modal-text{font-size:14px;color:#444;line-height:1.75;white-space:pre-wrap}
+.modal-comment{font-size:14px;color:var(--text);line-height:1.75;border-left:3px solid var(--green);padding-left:11px;border-radius:0;white-space:pre-wrap}
+.modal-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.modal-links a{font-size:12px;padding:5px 13px;border-radius:8px;border:1px solid var(--border);color:var(--text);text-decoration:none;background:var(--gray);transition:all .12s}
+.modal-links a:hover{border-color:var(--green);color:var(--green-dk)}
+hr.mdiv{border:none;border-top:1px solid var(--border);margin:12px 0}
+.empty{text-align:center;padding:3rem;color:var(--muted);font-size:14px;grid-column:1/-1}
+.join-wrap{text-align:center;padding:1.2rem 0 0}
+.join-btn{display:inline-block;background:var(--green);color:#fff;text-decoration:none;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r-pill);transition:background .15s}
+.join-btn:hover{background:var(--green-dk)}
+.err-banner{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;font-size:13px;color:#856404;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo">C</div>
+  <div><h1>COCoLa メンバー紹介</h1><p>メンバーのスキルとつながりをさがそう</p></div>
+</header>
+<div class="toolbar">
+  <div class="chips">
+    <span class="chip active" data-cat="all">すべて</span>
+    <span class="chip" data-cat="ものをつくる">ものをつくる</span>
+    <span class="chip" data-cat="まちをつくる">まちをつくる</span>
+    <span class="chip" data-cat="つながりをつくる">つながりをつくる</span>
+    <span class="chip" data-cat="食をつくる">食をつくる</span>
+    <span class="chip" data-cat="自分をつくる">自分をつくる</span>
+    <span class="chip" data-cat="ともにつくる">ともにつくる</span>
+  </div>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="名前・スキルで検索...">
+  </div>
+</div>
+<main class="main">
+  <div class="err-banner" id="err-banner"></div>
+  <p class="meta" id="meta">読み込み中...</p>
+  <div class="grid" id="grid"><div class="empty">メンバー情報を読み込んでいます...</div></div>
+  <div class="join-wrap">
+    <a class="join-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZYSm7QglMdTIQjfRFzbTuRWxnMlXJfpby3uHEAGTQ-6lc3A/viewform?usp=header" target="_blank">＋ 入会 / 情報を修正する</a>
+  </div>
+</main>
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+<script>
+/* ★ GASデプロイ後、発行されたウェブアプリURLを書き換えてください */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxQ7gBHJQFVZEXcyisJdiL7xa64RcKzYjzBZLEGlkelSvxXCfPPHTW5eAVHB09aue1p/exec';
+
+/* 列マッピング（確定版）
+   A(0)タイムスタンプ B(1)メール C(2)目的 D(3)ニックネーム
+   E(4)本名 F(5)職業 G(6)写真 H(7)公開メール
+   I(8)SNS① J(9)SNS② K(10)URL① L(11)URL②
+   M(12)保有資格 N(13)好きなこと・得意なこと O(14)今後やりたいこと P(15)コメント */
+const COL={timestamp:0,email_form:1,purpose:2,nickname:3,name:4,job:5,photo:6,email_pub:7,sns1:8,sns2:9,url1:10,url2:11,license:12,skills:13,goals:14,comment:15};
+
+const CAT_RULES=[
+  {cat:'ものをつくる',   kw:['クラフト','革','レザー','木工','陶芸','金工','ハンドメイド','アクセサリー','縫製','洋裁','製帽','刺繍','フェルト','レジン','デザイン','映像','動画','イラスト','写真','制作','ものづくり','CAD','建築','工作']},
+  {cat:'まちをつくる',   kw:['まちづくり','イベント','マルシェ','地域','コミュニティ','活性化','PR','広報','里山','観光']},
+  {cat:'つながりをつくる',kw:['交流','コーチ','ファシリテ','人脈','繋がり','つながり','英語','翻訳','語学','SNS','相談','サポート','ソーシャル','コミュニケ','通訳']},
+  {cat:'食をつくる',     kw:['料理','食','発酵','味噌','麹','調理','ピザ','パン','カフェ','栄養','茶道','ハーブ','薬膳','乾物','保存食','ソムリエ']},
+  {cat:'自分をつくる',   kw:['コーチング','自己','学び','スポーツ','健康','ヨガ','ピラティス','瞑想','マインドフル','講師','教育','英語学習','語学学習','資格','トレーナー','ヒーラー']},
+  {cat:'ともにつくる',   kw:['連携','協働','ボランティア','行政','NPO','市民','防災','福祉','企業','経営','起業','団体','便利屋']},
+];
+const TAG_CLASS={'ものをつくる':'tc-mono','まちをつくる':'tc-machi','つながりをつくる':'tc-tsuna','食をつくる':'tc-shoku','自分をつくる':'tc-jibun','ともにつくる':'tc-tomo'};
+const SIL=`<svg width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="10" r="6" fill="#c8c8c2"/><path d="M2 28c0-7.18 5.82-13 13-13s13 5.82 13 13" fill="#c8c8c2"/></svg>`;
+const SIL_LG=`<svg width="42" height="42" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="14" r="8" fill="#c8c8c2"/><path d="M3 40c0-9.94 8.06-18 18-18s18 8.06 18 18" fill="#c8c8c2"/></svg>`;
+
+function toImgUrl(raw){
+  if(!raw)return '';
+  raw=raw.trim();
+  if(!raw.includes('drive.google.com'))return '';
+  let id='';
+  for(const p of[/\/file\/d\/([^\/\?&]+)/,/[?&]id=([^&]+)/,/\/d\/([^\/\?&]+)/]){const m=raw.match(p);if(m){id=m[1];break;}}
+  return id?`https://drive.google.com/thumbnail?id=${id}&sz=w200`:'';
+}
+function avatarHTML(photo,large){
+  const cls=large?'modal-avatar':'avatar';
+  const svg=large?SIL_LG:SIL;
+  const url=toImgUrl(photo);
+  if(url){const e=svg.replace(/"/g,'&quot;');return `<div class="${cls}"><img src="${url}" alt="プロフィール写真" onerror="this.parentNode.innerHTML='${e}';this.remove()"></div>`;}
+  return `<div class="${cls}">${svg}</div>`;
+}
+
+function parseCSV(text){
+  const lines=text.split(/\r?\n/),rows=[];
+  for(let i=1;i<lines.length;i++){const c=splitRow(lines[i]);if(c[COL.nickname])rows.push(c);}
+  return rows;
+}
+function splitRow(row){
+  const res=[];let cur='',inQ=false;
+  for(let i=0;i<row.length;i++){const c=row[i];
+    if(c==='"'){if(inQ&&row[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+    else if(c===','&&!inQ){res.push(cur.trim());cur='';}else cur+=c;}
+  res.push(cur.trim());return res;
+}
+
+/* 同一ニックネームは後の行（修正回答）で上書き */
+function buildMembers(rows){
+  const map=new Map();
+  rows.forEach(cols=>{
+    const g=c=>(cols[c]||'').trim();
+    const nick=g(COL.nickname);
+    if(!nick)return;
+    const base=map.has(nick)?{...map.get(nick)}:{};
+    const merged={
+      nickname:nick,
+      name    :g(COL.name)    ||base.name    ||'',
+      job     :g(COL.job)     ||base.job      ||'',
+      photo   :g(COL.photo)   ||base.photo    ||'',
+      email   :g(COL.email_pub)||base.email   ||'',
+      license :g(COL.license) ||base.license  ||'',
+      skills  :g(COL.skills)  ||base.skills   ||'',
+      goals   :g(COL.goals)   ||base.goals    ||'',
+      comment :g(COL.comment) ||base.comment  ||'',
+      _s1:g(COL.sns1)||base._s1||'',_s2:g(COL.sns2)||base._s2||'',
+      _u1:g(COL.url1)||base._u1||'',_u2:g(COL.url2)||base._u2||'',
+    };
+    map.set(nick,merged);
+  });
+  return Array.from(map.values()).map((m,idx)=>{
+    const combined=[m.job,m.skills,m.comment,m.goals].join(' ');
+    const cats=CAT_RULES.filter(r=>r.kw.some(k=>combined.includes(k))).map(r=>r.cat);
+    if(!cats.length)cats.push('ともにつくる');
+    const links=[];
+    if(m.email)links.push({label:'メール',url:'mailto:'+m.email});
+    [m._s1,m._s2,m._u1,m._u2].forEach(u=>{
+      u=cleanUrl(u);if(!u)return;
+      let label='Web';
+      if(u.includes('instagram'))label='Instagram';
+      else if(u.includes('facebook'))label='Facebook';
+      else if(u.includes('twitter')||u.includes('x.com'))label='X';
+      else if(u.includes('line.me'))label='LINE';
+      else if(u.includes('linkedin'))label='LinkedIn';
+      else if(u.includes('youtube'))label='YouTube';
+      else if(u.includes('note.com'))label='note';
+      links.push({label,url:u});
+    });
+    return{idx,...m,cats,links};
+  });
+}
+function cleanUrl(u){
+  if(!u)return '';u=u.trim();
+  if(!u.startsWith('http'))return '';
+  const m=u.match(/[?&]q=([^&]+)/);
+  if(m){try{return decodeURIComponent(m[1]);}catch(e){}}
+  return u;
+}
+
+function cardHTML(m){
+  const tags=m.cats.slice(0,2).map(t=>`<span class="tag ${TAG_CLASS[t]||''}">${t}</span>`).join('');
+  const lnks=m.links.slice(0,3).map(l=>`<a class="lbtn" href="${esc(l.url)}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  const bio=m.skills||m.comment||'';
+  return `<div class="card" data-idx="${m.idx}" role="button" tabindex="0">
+    <div class="card-top">${avatarHTML(m.photo,false)}<div>
+      <div class="card-name">${esc(m.nickname)}</div>
+      <div class="card-sub">${esc(m.name)}${m.name&&m.job?'｜':''}${esc(m.job)}</div>
+    </div></div>
+    ${tags?`<div class="tags">${tags}</div>`:''}
+    ${bio?`<p class="card-bio">${esc(bio)}</p>`:''}
+    ${lnks?`<div class="card-links">${lnks}</div>`:''}
+  </div>`;
+}
+function modalHTML(m){
+  const tags=m.cats.map(t=>`<span class="tag ${TAG_CLASS[t]||''}">${t}</span>`).join('');
+  const lnks=m.links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  let body='';
+  if(m.skills) body+=`<p class="modal-section">スキル・得意なこと</p><p class="modal-text">${esc(m.skills)}</p>`;
+  if(m.license)body+=`<p class="modal-section">保有資格</p><p class="modal-text">${esc(m.license)}</p>`;
+  if(m.goals)  body+=`<p class="modal-section">今後やりたいこと</p><p class="modal-text">${esc(m.goals)}</p>`;
+  if(m.comment)body+=`<p class="modal-section">コメント</p><p class="modal-comment">${esc(m.comment)}</p>`;
+  return `<div class="modal-top">${avatarHTML(m.photo,true)}<div>
+    <div class="modal-name">${esc(m.nickname)}</div>
+    <div class="modal-sub">${esc(m.name)}${m.name&&m.job?'｜':''}${esc(m.job)}</div>
+  </div></div>
+  ${tags?`<div class="modal-tags">${tags}</div>`:''}
+  <hr class="mdiv">${body}
+  ${lnks?`<div class="modal-links">${lnks}</div>`:''}`;
+}
+
+let allMembers=[],activeCat='all';
+function applyFilter(){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const filtered=allMembers.filter(m=>{
+    const catOk=activeCat==='all'||m.cats.includes(activeCat);
+    const textOk=!q||[m.nickname,m.name,m.job,m.skills,m.comment].some(v=>(v||'').toLowerCase().includes(q));
+    return catOk&&textOk;
+  });
+  const g=document.getElementById('grid');
+  document.getElementById('meta').textContent=`${allMembers.length}人のメンバー中 ${filtered.length}人を表示`;
+  if(!filtered.length){g.innerHTML='<div class="empty">該当するメンバーが見つかりませんでした</div>';return;}
+  g.innerHTML=filtered.map(cardHTML).join('');
+  g.querySelectorAll('.card').forEach(el=>{
+    el.addEventListener('click',()=>openModal(+el.dataset.idx));
+    el.addEventListener('keydown',e=>{if(e.key==='Enter')openModal(+el.dataset.idx);});
+  });
+  g.querySelectorAll('.card-links a').forEach(a=>a.addEventListener('click',e=>e.stopPropagation()));
+}
+function openModal(idx){
+  const m=allMembers.find(x=>x.idx===idx);if(!m)return;
+  document.getElementById('modal-content').innerHTML=modalHTML(m);
+  document.getElementById('modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal-bg').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('modal-bg').addEventListener('click',e=>{if(e.target===document.getElementById('modal-bg'))closeModal();});
+document.getElementById('modal-close').addEventListener('click',closeModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');activeCat=chip.dataset.cat;applyFilter();
+  });
+});
+document.getElementById('search').addEventListener('input',applyFilter);
+
+async function loadMembers(){
+  if(!GAS_URL||GAS_URL==='YOUR_GAS_URL_HERE'){loadSample();return;}
+  // GAS内での実行時はgoogle.script.runを優先（同一オリジン・確実）
+  if(typeof google!=='undefined'&&google.script){
+    google.script.run
+      .withSuccessHandler(function(rows){allMembers=buildMembers(rows);applyFilter();})
+      .withFailureHandler(function(err){showErr('データ取得エラー: '+(err.message||String(err)));loadSample();})
+      .getMembers();
+    return;
+  }
+  // GAS外（iframe埋め込み等）はfetchで取得
+  try{
+    const res=await fetch(GAS_URL+'?mode=json');
+    if(!res.ok)throw new Error('HTTP '+(res.status||'エラー'));
+    allMembers=buildMembers(await res.json());
+    applyFilter();
+  }catch(err){
+    showErr('データの読み込みに失敗しました。（'+(err.message||String(err))+'）');
+    loadSample();
+  }
+}
+function showErr(msg){const b=document.getElementById('err-banner');b.textContent=msg;b.style.display='block';}
+function loadSample(){
+  allMembers=[
+    {idx:0,nickname:'ゆうさん',name:'中司祐樹',job:'レザークラフター',photo:'',email:'you0810jmsdf@gmail.com',license:'なし',skills:'レザークラフト（CAD型紙作成含む）、木工DIY、発酵食品作り、ものづくり全般',goals:'レザークラフターとしての起業、革工房の設置、工房での教室開催',comment:'いろんな方と出会い、相互に高めあっていけたら。メンバーのスキルだけで村が作れるコミュニティに育てたいですね～。',links:[{label:'メール',url:'mailto:you0810jmsdf@gmail.com'},{label:'Facebook',url:'https://www.facebook.com/you0810jmsdf/'},{label:'Instagram',url:'https://www.instagram.com/you0810jmsdf/'}],cats:['ものをつくる','ともにつくる']},
+    {idx:1,nickname:'とっしゅん',name:'桑野利一',job:'会社経営・パーソナルコーチ',photo:'',email:'tosshun@gmail.com',license:'TOEIC 890、第三種電気主任技術者',skills:'ピザ作り、コミュニティ運営、人脈作り',goals:'コーチング、屋外イベント',comment:'コーチングという素晴らしいものをもっと多くの人に知ってもらいたい！',links:[{label:'Instagram',url:'https://www.instagram.com/toshikazu.kuwano/'}],cats:['つながりをつくる','ともにつくる']},
+    {idx:2,nickname:'ひこさん',name:'湯澤秀子',job:'会社員',photo:'',email:'inzairanka5@gmail.com',license:'福祉住環境コーディネーター2級',skills:'音楽、ピアノ、ドライブ',goals:'誰でも気軽に集まれる居場所づくり',comment:'COCoLaの仲間と仕事を興し、生涯現役で楽しく働ける環境づくりをしたい。',links:[{label:'メール',url:'mailto:inzairanka5@gmail.com'}],cats:['つながりをつくる','自分をつくる']},
+    {idx:3,nickname:'ほっしー',name:'保科宏行',job:'映像ディレクター',photo:'',email:'hoshina1979@gmail.com',license:'なし',skills:'映像制作、アウトドア、キャンプ、フットサル',goals:'YouTube、映像講師、配信業',comment:'印西市で映像制作会社を営んでいます。地元に密着した活動ができればと思っています。',links:[{label:'Web',url:'https://www.indivisual.jp'},{label:'Instagram',url:'https://www.instagram.com/hoshipii/'}],cats:['ものをつくる','まちをつくる']},
+    {idx:4,nickname:'もよ',name:'田ノ内倫代',job:'ダンス衣装縫製・元CG制作',photo:'',email:'bousai.jyoseinokai@gmail.com',license:'教員免許、防災士、応急手当普及員',skills:'洋裁、CG制作、写真撮影・編集、防災知識、DIY',goals:'防災・生活技術の習得',comment:'防災関係のイベント参加や勉強会をしています。個人でも技能や経験のスキル交換をしながら知識を深めていけたら。',links:[{label:'Instagram',url:'https://www.instagram.com/bousai_jyoseinokai'}],cats:['ものをつくる','ともにつくる']},
+    {idx:5,nickname:'リリー',name:'足立リリー',job:'英語翻訳家',photo:'',email:'lilyaux@gmail.com',license:'英検1級・TOEFL 637・TOEIC 965',skills:'英語翻訳（映像・字幕・テキスト）、ギター演奏、写真撮影',goals:'動画制作（翻訳＋英語字幕セット納品）',comment:'印西に骨を埋めるつもりですので、語学面で印西の皆様のお役に立てれば幸いです。',links:[{label:'Instagram',url:'https://www.instagram.com/lilyaux829'},{label:'Facebook',url:'https://www.facebook.com/lily.adachi'}],cats:['つながりをつくる','自分をつくる']},
+  ];
+  showErr('⚙️ サンプルデータ表示中。SHEET_CSV_URL を設定すると本番データが自動表示されます。');
+  applyFilter();
+}
+function esc(s){if(!s)return '';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+loadMembers();
+</script>
+</body>
+</html>
