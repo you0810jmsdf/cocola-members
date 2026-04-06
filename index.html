@@ -90,6 +90,7 @@ hr.mdiv{border:none;border-top:1px solid var(--border);margin:12px 0}
     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="search" placeholder="名前・スキルで検索...">
   </div>
+  <a class="join-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfZYSm7QglMdTIQjfRFzbTuRWxnMlXJfpby3uHEAGTQ-6lc3A/viewform?usp=header" target="_blank">＋ 入会 / 情報を修正する</a>
 </div>
 <main class="main">
   <div class="err-banner" id="err-banner"></div>
@@ -189,7 +190,8 @@ function buildMembers(rows){
     [m._s1,m._s2,m._u1,m._u2].forEach(u=>{
       u=cleanUrl(u);if(!u)return;
       let label='Web';
-      if(u.includes('instagram'))label='Instagram';
+      if(u.includes('threads.net'))label='Threads';
+      else if(u.includes('instagram'))label='Instagram';
       else if(u.includes('facebook'))label='Facebook';
       else if(u.includes('twitter')||u.includes('x.com'))label='X';
       else if(u.includes('line.me'))label='LINE';
@@ -212,7 +214,7 @@ function cleanUrl(u){
 function cardHTML(m){
   const tags=m.cats.slice(0,2).map(t=>`<span class="tag ${TAG_CLASS[t]||''}">${t}</span>`).join('');
   const lnks=m.links.slice(0,3).map(l=>`<a class="lbtn" href="${esc(l.url)}" target="_blank" rel="noopener">${l.label}</a>`).join('');
-  const bio=m.skills||m.comment||'';
+  const bio=m.comment||m.skills||'';
   return `<div class="card" data-idx="${m.idx}" role="button" tabindex="0">
     <div class="card-top">${avatarHTML(m.photo,false)}<div>
       <div class="card-name">${esc(m.nickname)}</div>
